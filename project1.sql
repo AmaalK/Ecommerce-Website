@@ -31,6 +31,7 @@ CREATE TABLE BillingInformation
   PRIMARY KEY(CreditCardNo)
   );
 
+
 CREATE TABLE Seller
 (
   SellerID INT(9) NOT NULL AUTO_INCREMENT,
