@@ -15,13 +15,6 @@ CREATE TABLE Usern
   UNIQUE(Username)
 );
 
-CREATE TABLE Product
-(
-  ProductID INT(9) NOT NULL AUTO_INCREMENT,
-  ProductName VARCHAR(20) NOT NULL,
-  PRIMARY KEY(ProductID)
-);
-
 CREATE TABLE BillingInformation
 (
   CreditCardName VARCHAR(50) NOT NULL,
@@ -30,7 +23,6 @@ CREATE TABLE BillingInformation
   ExpDate DATE NOT NULL,
   PRIMARY KEY(CreditCardNo)
   );
-
 
 CREATE TABLE Seller
 (
@@ -80,16 +72,16 @@ CREATE TABLE Buyer
   FOREIGN KEY(PhoneNo) REFERENCES Usern(PhoneNo)
 );
 
-CREATE TABLE Product_Item
+CREATE TABLE Product
 (
   ProductID INT(9) NOT NULL,
   StoreID INT(9) NOT NULL,
   CategoryID INT(9) NOT NULL,
   Price INT(9) NOT NULL,
   In_Stock INT(9) NOT NULL,
+  ProductName VARCHAR(20) NOT NULL,
   Description_Item VARCHAR(255) NOT NULL,
   PRIMARY KEY (ProductID, StoreID),
-  FOREIGN KEY (ProductID) REFERENCES Product(ProductID),
   FOREIGN KEY (StoreID) REFERENCES Store(StoreID),
   FOREIGN KEY (CategoryID) REFERENCES Category(CategoryID)
 );
@@ -130,6 +122,6 @@ CREATE TABLE Order_Product
   StoreID INT(9) NOT NULL,
   PRIMARY KEY (OrderID, ProductID, StoreID),
   FOREIGN KEY (OrderID) REFERENCES Orderr(OrderID),
-  FOREIGN KEY (ProductID, StoreID) REFERENCES Product_Item(ProductID, StoreID)
+  FOREIGN KEY (ProductID, StoreID) REFERENCES Product(ProductID, StoreID)
 );
 
