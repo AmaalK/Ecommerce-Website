@@ -3,7 +3,7 @@
    $DBhost = "localhost";
    $DBuser = "root";
    $DBpass = "";
-   $DBname = "test3";
+   $DBname = "ecommerce";
    $errors = array();
    $fname = "";
    $lname = "";

@@ -43,7 +43,7 @@
     background: #f1f1f1;
   }
   .btn {
-    background-color: #4CAF50;
+    background-color: #7ed321;
     color: white;
     padding: 16px 20px;
     margin: 8px 0;
@@ -64,11 +64,8 @@
     text-align: left;
   }
   .success {
-    color: #3c763d; 
+    color: #7ed321; 
     background: #dff0d8; 
-    border: 1px solid #3c763d;
+    border: 1px solid #7ed321;
     margin-bottom: 20px;
-  }
-  .member {
-
   }

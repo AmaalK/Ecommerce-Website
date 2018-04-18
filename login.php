@@ -4,6 +4,7 @@ if (isset($_POST['login_user'])) {
   $password = mysqli_real_escape_string($db, $_POST['password']);
   if (count($errors) == 0) {
   	$password = md5($password);
+	$username = md5($username);
   	$query = "SELECT * FROM usern WHERE username='$username' AND password='$password'";
   	$results = mysqli_query($db, $query);
   	if (mysqli_num_rows($results) == 1) {
@@ -16,6 +17,7 @@ if (isset($_POST['login_user'])) {
   	}
   }
 }
+$db->close();
  ?>
 <!DOCTYPE html>
 <html>
@@ -46,6 +48,19 @@ if (isset($_POST['login_user'])) {
   		<label>Password</label>
   		<input type="password" placeholder="Enter Password" name="password" required>
   	</div>
+	
+	<div class="input-group">
+	      <div class="col-half">
+        <h4>Type of User</h4>
+        <div class="input-group">
+          <input type="radio" name="user" value="buyer" id="user-buyer" checked="true"/>
+          <label for="user-buyer">Buyer</label>
+          <input type="radio" name="user" value="seller" id="user-seller"/>
+          <label for="user-seller">Seller</label>
+        </div>
+      </div>
+      </div>
+	  
   	<div class="input-group">
   		<button type="submit" class="btn" name="login_user">Login</button>
   	</div>
