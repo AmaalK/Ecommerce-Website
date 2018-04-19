@@ -17,8 +17,7 @@
   $storeRow=$storeName->fetch_array();
   
   $category = $db->query("SELECT * FROM category WHERE sellerID=$userRow[SellerID]");
-  //$categoryRow=$category->fetch_array();
-  $product = $db->query("SELECT productName, categoryID FROM product WHERE sellerID=$userRow[SellerID]");
+  //$category=$category->fetch_array();
   
   if (isset($_POST['deletebtn'])) {
 	$categoryName = mysqli_real_escape_string($db, $_POST['category']);
@@ -41,32 +40,7 @@
   	header("location: category.php");}}
   }
    if (isset($_POST['productbtn'])) {
-	$productCategory = mysqli_real_escape_string($db, $_POST['productCategory']);
-	$productName = mysqli_real_escape_string($db, $_POST['productName']);
-	if(empty($productCategory) || empty($productName)){array_push($errors, "Please fill in the product information.");}
-	else{
-		$getCat = $db->query("SELECT categoryID FROM category WHERE categoryName='$productCategory'");
-		$getCat = $getCat->fetch_array();
-		$check_email = $db->query("SELECT productID FROM product WHERE productName='$productName' AND SellerID=$userRow[SellerID] AND CategoryID=$getCat[categoryID]");
-		$count=$check_email->num_rows;
-	if($count==1){array_push($errors, "Product name already exists in that category.");}
-	else {
-		$result=$db->query("INSERT INTO product(categoryID,storeID,sellerID, productName) VALUES ($getCat[categoryID] ,$storeRow[StoreID],$userRow[SellerID], '$productName')");
-		header("location: category.php");}}
-  }
-  if (isset($_POST['productdelete'])) {
-	$productCategory = mysqli_real_escape_string($db, $_POST['productCategory']);
-	$productName = mysqli_real_escape_string($db, $_POST['productName']);
-	if(empty($productCategory) || empty($productName)){array_push($errors, "Please fill in the product information.");}
-	else{
-	$getCat = $db->query("SELECT categoryID FROM category WHERE categoryName='$productCategory'");
-	$getCat = $getCat->fetch_array();
-	$check_email = $db->query("SELECT productID FROM product WHERE productName='$productName' AND SellerID=$userRow[SellerID] AND CategoryID=$getCat[categoryID]");
-	$count=$check_email->num_rows;
-    if($count==1){$result=$db->query("DELETE FROM product WHERE productName='$productName' AND SellerID=$userRow[SellerID] AND CategoryID=$getCat[categoryID]");
-  	header("location: category.php");}
-	else{
-	array_push($errors, "Item does not exist.");}}
+  	header("location: category.php");
   }
 ?>
 <!doctype html>
@@ -79,7 +53,7 @@
   </head>
   <body background="back2.png">
 </div>
-  <form method="post" action="category.php">
+  <form method="post" action="products.php">
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
         <li class="name">
@@ -99,6 +73,8 @@
 	<div style="margin: 10px 0px 10px 0px; width: 30%;padding: 20px 40px; ">
 	
   	  <label style = "font-size:1.5em;"><b>Store Name: <?php echo $storeRow['StoreName'];?> </b></label>
+	  		<button type="submit" class="btn" name="productbtn">Add Categories</button>	
+
 	  	  </div>
 		  <div style="margin: 10px 0px 10px 0px; width: 30%;padding: 0px 40px; ">
 		  <?php  if (count($errors) > 0) : ?>
@@ -108,12 +84,12 @@
 			<?php endforeach ?>
 		</div>
 	<?php  endif ?> 
-  	  <label style = "font-size:1.2em;"><b>Edit Categories:</b></label>
-	    	  <input type="text" placeholder="Category Name" name="category">
-		<button type="submit" class="btn" name="categorybtn">Add Category</button>	
-	    <button type="submit" class="btn" name="deletebtn">Delete Category</button>	
+  	  <label style = "font-size:1.2em;"><b>Edit Products:</b></label>
+	    	  <input type="text" placeholder="Product Name" name="category">
+		<button type="submit" class="btn" name="categorybtn">Add Product</button>	
+	    <button type="submit" class="btn" name="deletebtn">Delete Product</button>	
 
-		  	  <label style = "font-size:1.2em;"><b>Available Categories:</b></label>
+		  	  <label style = "font-size:1.2em;"><b>Available Products:</b></label>
 
 			<?php
 			$row = array();
@@ -122,31 +98,13 @@
 			}
 		  ?>
 	  	  </div>
-		  
-		  <div style="margin: 10px 0px 10px 0px; width: 30%;padding: 0px 40px; ">
-  	  <label style = "font-size:1.2em;"><b>Edit Products:</b></label>
-	    	  <input type="text" placeholder="Product Name" name="productName">
-			  <input type="text" placeholder="Category Name" name="productCategory">
-
-		<button type="submit" class="btn" name="productbtn">Add Product</button>	
-	    <button type="submit" class="btn" name="productdelete">Delete Product</button>	
-
-		  	  <label style = "font-size:1.2em;"><b>Available Products:</b></label>
-
-	  	  </div>
-			<?php
-			$row = array();
-			$row2 = array();
-			echo "<table style='width:30%'>";
-			echo "<tr><th>Product Name</th><th>Product Category</th></tr>";
-			while($row = $product->fetch_assoc()){
-				$getCategory = $db->query("SELECT categoryName FROM category WHERE categoryID=$row[categoryID]");
-				$getCategory = $getCategory->fetch_array();
-				$getCategory = $getCategory['categoryName'];
-				echo "<tr><td>" . $row['productName'] . "</td><td>" . $getCategory . "</td></tr>";
-			}
-		  ?>
-   
+    <div class="row" style="margin-top:550px;">
+      <div class="small-12">
+        <footer style="margin-top:550;">
+           <p style="text-align:center; font-size:0.8em;">&copy; Amaal's Souq. All Rights Reserved.</p>
+        </footer>
+      </div>
+    </div>
 	</form>
   </body>
 </html>

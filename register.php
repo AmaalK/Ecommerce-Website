@@ -149,7 +149,7 @@ $db->close();
   	  <button type="submit" class="btn" name="submit">Register</button>
   	</div>
 	<p class="member">
-  		Already a member? <a href="login.php">Sign in</a>
+  		Already a member? <a href="index.php">Sign in</a>
   	</p>
   	
   </form>
