@@ -12,7 +12,9 @@
   $username = $_SESSION['username'];
   $query = $db->query("SELECT * FROM buyer WHERE Username='$username'");
   $userRow=$query->fetch_array();
-  $db->close();
+  
+  $query = $db->query("SELECT * FROM orderr WHERE BuyerID=$userRow[BuyerID]");
+  //$orderRow = $query->fetch_array();
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -22,9 +24,9 @@
     <title>Amaal's Souq</title>
     <link rel="stylesheet" href="css/foundation.css" />
   </head>
-  <body background="back.png">
+  <body background="back2.png">
 </div>
-  <form method="post" action="buyer.php">
+  <form method="post" action="checkout.php">
     <nav class="top-bar" data-topbar role="navigation">
       <ul class="title-area">
         <li class="name">
@@ -42,14 +44,23 @@
         </ul>
       </section>
     </nav>
-		
-    <div class="row" style="margin-top:550px;">
-      <div class="small-12">
-        <footer style="margin-top:550;">
-           <p style="text-align:center; font-size:0.8em;">&copy; Amaal's Souq. All Rights Reserved.</p>
-        </footer>
-      </div>
-    </div>
+	<div style="margin: 10px 0px 10px 0px; width: 30%;padding: 0px 100px; ">
+	<h3>Order History:</h3>
+	</div>
 	</form>
+       <?php
+	     $query = $db->query("SELECT * FROM orderr WHERE BuyerID=$userRow[BuyerID]");
+          //$result = $db->query("SELECT * FROM order_product WHERE OrderID=$orderRow[OrderID]");
+          if($query){
+			  while($obj2 = $query->fetch_object()){
+				$result = $db->query("SELECT * FROM order_product WHERE OrderID=$obj2->OrderID");
+            while($obj = $result->fetch_object()) {
+              echo '<div style="padding: 0px 100px;">';
+              echo '<p style= "display: inline-block; ">' . 'Quantity:  '.$obj->Quantity.' , OrderID:   '.$obj->OrderID.' , ProductID:   '.$obj->ProductID.' , StoreID:   '.$obj->StoreID.'</p>';
+              echo '</div>';
+			  }}
+          }
+          ?>
+	
   </body>
 </html>

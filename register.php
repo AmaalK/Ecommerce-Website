@@ -44,7 +44,13 @@ if (isset($_POST['submit'])) {
 	
 	$qq=$db->query("INSERT INTO buyer (CreditCardNo, UserID, Email, PhoneNo, Username)
 			  VALUES($userRow[CreditCardNo], $userRow[UserID], '$userRow[Email]', $userRow[PhoneNo], '$userRow[Username]')");
+			  
+	$qq = $db->query("SELECT * FROM buyer WHERE Username='$username'");
+	$buyerRow = $qq->fetch_array();
 	
+	$qq = $db->query("INSERT INTO cart (BuyerID)
+				VALUES($buyerRow[BuyerID])");
+				
 	$qq=$db->query("INSERT INTO seller (UserID, Email, PhoneNo, Username)
 			  VALUES($userRow[UserID], '$userRow[Email]', $userRow[PhoneNo], '$userRow[Username]')");
 	
